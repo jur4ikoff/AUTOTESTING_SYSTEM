@@ -23,4 +23,11 @@ echo
 "${path_to_script}"/func_tests/scripts/func_tests.sh -v
 echo 
 echo ">> Analyse coverage"
-gcov -n -a "$path_to_script"/app.exe | tail -n 1
+
+for file in *.gcda; do
+    base=$(basename -s .gcda "$file")
+    echo "info about \"$base\".c"
+    gcov "$file" | tail -n +2 | head -n 1
+    echo
+done
+

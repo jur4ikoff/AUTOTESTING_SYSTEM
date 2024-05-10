@@ -2,5 +2,9 @@
 
 path_to_script=$(dirname "$(readlink -f "$0")")
 
-gcc -std=c99 -Wall -Wvla -Werror -c "$path_to_script"/main.c -o "$path_to_script"/main.o
-gcc -o "$path_to_script"/app.exe "$path_to_script"/main.o -lm
+for file in *.c; do
+    base=$(basename -s .c "$file")
+    gcc -std=c99 -Wall -Wvla -Werror -c "$path_to_script"/"$file" -o "$path_to_script"/"$base".o
+done
+
+gcc -o "$path_to_script"/app.exe "$path_to_script"/*.o -lm
